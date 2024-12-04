@@ -3,210 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>chez Long Walk</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <title>Long Walk - Agence de Tourisme Spatial</title>
+    <style>
+        /* Styles globaux */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        header, footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+            z-index: 10;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 1rem;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #ff6347;
+        }
+        main {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        footer p {
+            margin-top: 1rem;
+        }
+
+        /* Fond animé */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png') repeat;
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        /* Étoiles animées */
+        @keyframes star-twinkle {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: star-twinkle 2s infinite;
+        }
+        .star:nth-child(1) { top: 10%; left: 20%; width: 2px; height: 2px; animation-duration: 1.5s; }
+        .star:nth-child(2) { top: 30%; left: 50%; width: 3px; height: 3px; animation-duration: 2.5s; }
+        .star:nth-child(3) { top: 50%; left: 10%; width: 4px; height: 4px; animation-duration: 2s; }
+
+        /* Conteneur de section */
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Bienvenue sur le site de l\'Agence de Tourisme Spatial!');
+            
+            // Ajout d'étoiles animées
+            const starsContainer = document.createElement('div');
+            starsContainer.classList.add('stars');
+            document.body.appendChild(starsContainer);
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                starsContainer.appendChild(star);
+            }
+
+            // Navigation dynamique
+            function showSection(sectionId) {
+                const sections = document.querySelectorAll('.section');
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === sectionId) {
+                        section.classList.add('active');
+                    }
+                });
+            }
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = e.target.getAttribute('onclick').match(/'([^']+)'/)[1];
+                    showSection(target);
+                });
+            });
+
+            // Afficher la section principale par défaut
+            showSection('home');
+        });
+    </script>
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li><a href="#" onclick="showSection('home')">Long Walk</a></li>
-                <li><a href="#" onclick="showSection('services')">Santés</a></li>
-                <li><a href="#" onclick="showSection('destinations')">Nos Promesses</a></li>
-                <li><a href="#" onclick="showSection('contact')">Les Formules</a></li>
-                <li><a href="#" onclick="showSection('about')">Contact</a></li>
+                <li><a href="#" onclick="showSection('home')">Accueil</a></li>
+                <li><a href="#" onclick="showSection('services')">Services</a></li>
+                <li><a href="#" onclick="showSection('destinations')">Destinations</a></li>
+                <li><a href="#" onclick="showSection('contact')">Contact</a></li>
             </ul>
         </nav>
     </header>
     <main>
         <div id="home" class="section">
             <h1>Bienvenue chez Long Walk</h1>
-            <p>Découvrez Mars avec nos voyages spatiaux uniques.</p>
-            <div id="image-container"></div>
-            <p>Explorez la Planète Rouge avec Long Walk.</p>
-            <p>Embarquez pour une aventure unique avec Long Walk, la première agence de visites guidées sur Mars. Nos guides expérimentés vous conduiront à travers l'époustouflant paysage martien, mettant en valeur la beauté unique de la planète rouge. Que vous soyez un voyageur spatial chevronné ou un explorateur débutant, nos visites s'adressent à tous les niveaux d'expérience. Des canyons à couper le souffle aux anciennes ruines martiennes, chaque visite est soigneusement conçue pour vous offrir une expérience immersive et éducative. Rejoignez-nous pour un voyage vers l'inconnu et découvrez les mystères de Mars. Réservez votre excursion avec Long Walk dès aujourd'hui et commencez à planifier votre prochaine aventure interplanétaire.</p>
+            <p>Découvrez des aventures interstellaires inégalées.</p>
         </div>
-        <div id="services" class="section" style="display:none;">
-            <h1>Votre santé est importante !</h1>
-            <h1>Prérequis :</h1>
-            <p>Condition physique et santé</p>
-            <p>Examens médicaux : cardio, respiratoire, mental.</p>
-            <p>Forme physique : Entraînement à l’amont pour préparer les efforts physique à fournir pour les différentes activités</p>
-            <p>Formation en environnement spatial</p>
-            <p>Formation gravité réduite : Apprendre aux touristes/scientifiques à se déplacer en gravité martienne (pièce simulation)</p>
-            <p>Formation pour porter les combinaisons prévues : Vital pour la survie, et savoir réagir si défaillance ou besoin de réparations</p>
-            <p>Systèmes de survie : Savoir les utiliser correctement + savoir gérer les moments critiques</p>
-            <p>Adaptation psychologique</p>
-            <p>Entraînement à l’isolement : Prépa psychologique pour supporter le voyage, et la vie une fois arrivé</p>
-            <p>Gestion du stress : Savoir gérer le stress en cas d'événement météorologique probable en environnement extrême, panne d’équipement ou la possibilité de devoir retarder son retour sur Terre</p>
-            <p>Connaissance des protocoles de sécurité</p>
-            <p>Former les touristes à comment réagir en cas d’urgence martienne (exercices d’évacuation), protocoles de survie etc..</p>
-            <p>Qu’ils soient informés des dangers que la planète Mars peut réserver, dans le cas ou une exposition à un danger est inévitable</p>
-            <h1>Expérience en environnement extrême (préférable)</h1>
-            <p>Programmes d’entraînement pour permettre l’adaptation à ces milieux</p>
-            <p>Avoir déjà expérimenté ce genre d’environnement au préalable</p>
-            <p>Formation technique et connaissances basiques</p>
-            <p>Formation en réparation rapide des équipements spatiaux/compréhension des systèmes martiens</p>
-            <p>Savoir utiliser les méthodes de communication martiennes (s’habituer au décalage temporel) en cas de besoin de communiquer avec la Terre</p>
-            <p>Tolérance aux changements alimentaires et physiologiques</p>
-            <p>S’adapter au changement d’alimentation (nourriture spatiale) + Compréhension et acceptation des effets physiologiques (gravité, perte de masse musculaire..)</p>
-            <p>Assurance et engagements financiers</p>
-            <p>Souscrire à des assurances spécifiques pour couvrir les risques liés aux voyages spatiaux</p>
-            <p>Engagement financier, voyage très coûteux mais pas que (compter l’hébergement, la nourriture et les activités)</p>
+        <div id="services" class="section">
+            <h1>Nos Services</h1>
+            <p>Voyages, formations, et bien plus !</p>
         </div>
-        <div id="destinations" class="section" style="display:none;">
-            <h1>Nos Promesses</h1>
-            <p>Exploration des paysages emblématiques</p>
-            <p>Olympus Mons (plus grand volcan du système solaire), parcours randonnée</p>
-            <p>Valles Marineris, randonnée canyon martien ou exploration en rover</p>
-            <p>Randonnée et exploration à pied</p>
-            <p>Randonnée dans des cratères (Cratère Gale => Mission Curiosity)</p>
-            <p>Randonnée en gravité réduite</p>
-            <p>Observation du ciel et des phénomènes atmosphériques</p>
-            <p>Levers et couchers de soleil bleus</p>
-            <p>Sur Mars les coucher de soleil émettent une lumière bleue, donnant un nouveau regard sur les couchers de soleil (Plateformes d’observations mises en place pour permettre une vue optimale?)</p>
-            <p>Observation de phénomène météorologiques</p>
-            <p>Tempêtes de sable, changeant les environnements (faire vivre en simulation)</p>
-            <p>Aurores martiennes (visibles plus souvent aux pôles), offre un spectacle lumineux bien que moins fréquentes que sur Terre (Potentiel EVENT?)</p>
-            <p>Lever de la Terre (Pareil, points d’observation pour?)</p>
-            <p>Tours en rover ou véhicules tout-terrain</p>
-            <p>Circuit pour les explorations en rover à but touristiques (plaines désertiques ou alors des environnements souterrains, le tout guidé par un conducteur aguerri.</p>
-            <p>Sites de recherche et bases scientifiques</p>
-            <p>Voir ou et comment travaillent les scientifiques</p>
-            <p>Explorer les sites historiques des missions spatiales</p>
-            <p>Sites d’atterrissage historiques (Curiosity ou Perseverance) => Voir les formules</p>
-          <h1>Expérience unique et inédite</h1>
-<p>Sur le site vendre le truc de fou, Mars = lieu unique/voyage unique
-Activités exclusives
-<p>Avancées technologiques
-<p>Équipement très avancé technologiquement (futur lointain) : rovers avancés, drones, combi optimisées…
-<p>Les colonies/hôtel promettent un bon confort de part leur avancées + commodité moderne
-<p>Aventure et exploration
-<p>Passionnés d’aventures peut-être la tribu cible de notre service
-<p>Éducation et sensibilisation
-<p>Opportunité d’apprentissage de choses en lien avec mars, observable que là bas (astronomie, science martienne)
-<p>Interaction avec des scientifiques pouvant rendre le côté éducatif plus fort
-<p>Soutien à la recherche et à l’exploration
-<p>Soutien la recherche spatiale dans un sens et permet aussi de sensibiliser un peu la population à l’univers spatial et aux potentiels enjeux de la préservation des environnements extraterrestre</p>
-
+        <div id="destinations" class="section">
+            <h1>Nos Destinations</h1>
+            <p>Explorez Mars comme jamais auparavant.</p>
         </div>
-        <div id="contact" class="section" style="display:none;">
-            <h1>Les Formules</h1>
-            <form>
-                <h1>Expérience en environnement extrême (préférable)</h1>
-                <p>Formule All Inclusives (10 à 14 jours) :</p>
-                <p>- Hébergements, Repas pris en charge</p>
-                <p>- Possibilité de faire des activités dans un panel cependant réservé au grand public, tout ce qui demande un minimum d’expérience sera écarté.</p>
-                <h1>Formule Voyage sur Mesure :</h1>
-                <p>- Possibilité de choisir ses activités, l’agence derrière s’occupe du reste</p>
-                <h1>Formule Céleste (10 à 14 jours) :</h1>
-                <p>- Formule en adéquation avec des phénomènes célestes rares, comprenant donc un passage par ces évènements inclus dans la formule.</p>
-                <p>- Hébergements, Repas pris en charge (Pour les événement de ce genre, l’agence s’occupe de l’alimentation et du logement, pour permettre aux touristes de se focaliser pleinement sur l’occasion)</p>
-                <h1>Formule Valor :</h1>
-                <p>- Formule conçue pour les adeptes des randonnées en milieu à risque</p>
-                <p>- Cette formule doit faire passer un test de santé, pour vérifier si le client est apte à prendre part à la randonnée.</p>
-                <p>- Hébergement pris en charge</p>
-                <h1>Formule Curiosity :</h1>
-                <p>Comprend la visite du lieu du premier atterrissage de Curiosity, (symbole emblématique de l’exploration martienne)</p>
-                <h1>Formule Perseverance (Circuit Organisé 2) :</h1>
-                <p>Même concept que Curiosity mais pour l’autre site emblématique Perseverance</p>
-            </form>
-        </div>
-        <div id="about" class="section" style="display:none;">
-            <h1>On a hâte de vous rencontrer</h1>
-            <p>La planète rouge sera plus jolie avec vous dessus.</p>
-            <h1>Contactez-nous !</h1>
+        <div id="contact" class="section">
+            <h1>Contactez-nous</h1>
             <form>
                 <label for="name">Nom:</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" required>
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" required>
                 <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
+                <textarea id="message" required></textarea>
                 <button type="submit">Envoyer</button>
             </form>
         </div>
-        <div id="pro" class="section" style="display:none;">
-            <h1>Pro</h1>
-          <p> Les entreprises partenaires de Long Walk</p>
-            <h1>Entreprises aérospatiales</h1>
-SpaceX (colonisation), ExxonMobil (énergie à partir d’hydrogène), Ørsted (énergie éolienne)
-<h1>Entreprises agroalimentaires</h1>
-Bayer (agriculture en milieu extrême), Cargill (prod. Alimentaire durable), AeroFarms (agriculture verticale)
-<h1>Industries pharmaceutiques et biotechnologies</h1>
-Johnson&Johnson (recherche biomédicale), Pfizer (fab. pharmaceutique en environnement fermé)
-<h1>Technologies robotiques et IA</h1>
-Boston Dynamics (robots autonomes), IBM (IA pour gestion d’infrastructure autonome)
-</p>
-        </div>
-        <div id="vehicules" class="section" style="display:none;">
-            <h1>Véhicules</h1>
-          <p>Les bouchons martiens !
-            
-          <h1>Véhicules pour le transport vers Mars et sur Mars</h1>
-<p>Le projet Starship de SpaceX, vaisseau de transport prévu pour des centaines de personnes et réutilisable.
-<p>Navettes de transfert orbitales pour faire le transit entre l’orbite de mars et la surface pour permettre un accès à la planète optimal
-<h1>Véhicules de transport sur Mars</h1>
-<p>Les rovers tout-terrains, pour les explorations/balades/circuits (Ex : Rover MSL)
-<p>Bus martiens pour permettre le déplacement des visiteurs vers le lieu de leurs activités
-<h1>Véhicules pour des activités spécifiques</h1>
-Véhicule de rando à gravité réduite, pour permettre l’exploration de groupe de terrains accidentés.
-<p>Véhicule spécialisé dans le cadre d’exploration de grotte ou autres tunnels.
-<h1>Véhicules pour l'observation du ciel</h1>
-<p>Des véhicules qui faciliteraient le transport jusqu’au lieux d’observations de phénomènes célestes
-<h1>Véhicules pour le transport à grande échelle et logistique</h1>
-<p>Prévoir pour le ravitaillement d’équipement ou de nourriture/d’eau entre les pistes d’atterrissage et les colonies (des genre de camions?)
-<h1>Véhicules d’urgence et de secours</h1>
-<p>Véhicule permettant de régler les urgences, genre d’ambulance martienne pouvant transporter du personnel médical en cas d’incidents
-Modules de survie mobiles, pouvant permettre de s’abriter en cas de phénomène météorologiques non prévu</p>
-
-        </div>
-        <div id="conditions-santes" class="section" style="display:none;">
-            <h1>Conditions Santés</h1>
-            <p>Examens médicaux nécessaires pour un voyage court vers Mars
- <h1>Évaluation cardiovasculaire :</h1>
- <p>Vérifier que y a pas de pb cardiaques majeurs (changement de pression + apesanteur peut affecter système cardiovascu)
- <p>Test d’effort et électrocardiogrammes pour tester les capacités cardiaques + détecter les risques d’arythmie, que le stress ou les conditions spatiales peuvent aggraver.
- <h1>Examen respiratoire :</h1>
- <p>Vérification de la fonction pulmonaire, notamment pour détecter tout trouble obstructif ou restrictif.
- <p>L’apesanteur modifie la façon dont le corps gère les fluides, et la pression dans les cavités pulmonaires peut varier, d'où la nécessité d'une bonne capacité respiratoire.
- <h1>Évaluation de la santé osseuse et musculaire :</h1>
- <p>Bien que la durée du voyage soit courte, un minimum de condition physique est requis pour supporter le décollage et l'atterrissage, qui exercent des forces de gravité élevées.
- <p>Un examen de densité osseuse et un contrôle de la force musculaire garantissent que les astronautes peuvent tolérer ces forces.
- <h1>Tests ophtalmologiques :</h1>
- <p>L'espace peut provoquer des changements de vision, parfois appelés SANS (Spaceflight-Associated Neuro-ocular Syndrome), même sur de courtes durées. Un test visuel complet, y compris de la pression intraoculaire, serait donc nécessaire.
- <h1>Évaluation neurologique et tests cognitifs :</h1>
-Le stress d’un environnement spatial peut provoquer des effets cognitifs, comme une diminution de la mémoire ou de la concentration. Des tests de base évaluant les fonctions cognitives sont essentiels pour minimiser les risques d’erreur.
- <h1>Évaluation psychologique :</h1>
- <p>Bien que deux semaines soient relativement courtes, l’isolement, le confinement et le stress de l'espace nécessitent une préparation mentale. Les examens incluent des évaluations de la résilience émotionnelle et de la gestion du stress.
- <p>Profils à risque pour un voyage de courte durée vers Mars
- <h1>Personnes ayant des troubles cardiovasculaires :</h1>
- <p>Toute personne ayant un antécédent de maladies cardiaques, d’arythmie ou d’hypertension non contrôlée pourrait être à risque, en raison des variations de pression et des forces G lors du lancement et de l’atterrissage.
- <h1>Personnes avec des problèmes osseux ou musculaires :</h1>
-Des antécédents d’ostéoporose ou de fractures fréquentes peuvent être problématiques même pour un court séjour, surtout pour supporter les forces intenses de décollage et d’atterrissage.
- <h1>Problèmes de vision :</h1>
-Les troubles de la vision liés à la pression intraoculaire ou aux nerfs optiques pourraient être exacerbés par l’apesanteur, même pour une mission courte.
-<h1>Personnes ayant des troubles respiratoires :</h1>
- <p>Des conditions telles que l’asthme ou d'autres maladies pulmonaires restrictives pourraient poser problème en cas de changements dans la qualité de l'air et la pression ambiante.
-<h1>Sensibilité au stress et isolement :</h1>
- <p>Les candidats présentant des signes d’anxiété, de claustrophobie, ou ayant une faible tolérance à l’isolement pourraient rencontrer des difficultés psychologiques et des erreurs de jugement en mission.
-Ces examens visent à s’assurer que l’équipage peut supporter les défis uniques de l’espace, même pour une mission courte, afin de maximiser leur sécurité et efficacité.
-</p>
-        </div>
     </main>
-  <h1>Long Walk</h1>
-            <p></p>
     <footer>
-        <nav class="footer-nav">
-            <ul>
-                <li><a href="#" onclick="showSection('pro')">Pro</a></li>
-                <li><a href="#" onclick="showSection('vehicules')">Véhicules</a></li>
-                <li><a href="#" onclick="showSection('conditions-santes')">Conditions Santés</a></li>
-            </ul>
-        </nav>
         <p>&copy; 2024 Long Walk. Tous droits réservés.</p>
     </footer>
-    <script src="script.js"></script>
 </body>
 </html>
